@@ -1,5 +1,8 @@
 package uz.anas.study_center.repo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,6 +21,19 @@ public interface UserRepo extends JpaRepository<User, UUID> {
                     join users_roles ur on u.id = ur.user_id
                     join roles r on r.id = ur.roles_id
                     where r.name = ?1""")
-    List<User> findByRoleName(String roleName);
+    List<User> findALLByRoleName(String roleName);
 
+    @Query(nativeQuery = true, value = """
+                    select u.* from users u
+                    join users_roles ur on u.id = ur.user_id
+                    join roles r on r.id = ur.roles_id
+                    where r.name = ?1 and u.phone_number ilike %?2%""")
+    Page<User> findAllByRoleNameAndPhoneNumber(String roleName, String phoneNumber, Pageable pageable);
+
+    @Query(nativeQuery = true, value = """
+                    select u.* from users u
+                    join users_roles ur on u.id = ur.user_id
+                    join roles r on r.id = ur.roles_id
+                    where r.name = ?1""")
+    Page<User> findByRoleNamePaginated(String name, PageRequest pageRequest);
 }

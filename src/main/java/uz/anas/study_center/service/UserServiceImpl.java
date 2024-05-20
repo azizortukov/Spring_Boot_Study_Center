@@ -1,6 +1,8 @@
 package uz.anas.study_center.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.anas.study_center.entity.User;
@@ -41,6 +43,16 @@ public class UserServiceImpl implements UserService  {
 
     @Override
     public List<User> getAllStudents() {
-        return userRepo.findByRoleName(RoleName.ROLE_STUDENT.name());
+        return userRepo.findALLByRoleName(RoleName.ROLE_STUDENT.name());
+    }
+
+    @Override
+    public Page<User> getAllStudentsContaining(Integer pageNumber, Integer pageSize, String search) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        if (search != null && !search.isEmpty()) {
+            return userRepo.findAllByRoleNameAndPhoneNumber(RoleName.ROLE_STUDENT.name(), search, pageRequest);
+        }else {
+            return userRepo.findByRoleNamePaginated(RoleName.ROLE_STUDENT.name(), pageRequest);
+        }
     }
 }

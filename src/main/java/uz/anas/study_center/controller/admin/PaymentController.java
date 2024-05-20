@@ -45,4 +45,10 @@ public class PaymentController {
         return "redirect:/admin/payment";
     }
 
+    //TODO create payment info page
+    @GetMapping("/info")
+    public String info(Model model) {
+        return "admin/info";
+    }
+
 }

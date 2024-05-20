@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<th:block th:insert="admin/admin.navbar::admin-navbar"></th:block>
+<div class="row m-4">
+    <div class="col-10 offset-1">
+        <div class="d-flex my-5 ">
+            <form class="d-flex ms-3 me-auto" role="search" action="/admin/student" method="get">
+<!--                <input name="search" class="form-control me-2" type="search" placeholder="Enter student number">-->
+                <div class="input-group me-2">
+                    <span class="input-group-text">+998</span>
+                    <input th:value="${search}" name="search" type="search" class="form-control shadow-sm" placeholder="Enter student number">
+                </div>
+                <button class="btn btn-outline-info  ml-4" type="submit">Search</button>
+            </form>
+            <a href="/admin/group/action" class="btn btn-info shadow text-white text-center me-3">Add Student</a>
+        </div>
+
+        <div class="p-4">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Full name</th>
+                    <th>Phone Number</th>
+                    <th>Group</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="vertical-align: middle" th:each="student : ${students.content}">
+                    <td th:text="${studentStat.index + 1}"></td>
+                    <td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
+                    <td th:text="'+998' + ${student.phoneNumber}"></td>
+                    <td><a th:href="'/admin/student/info?studentId=' + ${student.id}" class="btn btn-secondary px-4 text-white">More info</a></td>
+                </tr>
+                </tbody>
+            </table>
+<!--            pagination-->
+            <form action="/admin/student" method="get">
+                <div class="d-flex justify-content-center align-items-center mt-5">
+
+                    <div class="d-flex align-items-center me-4">
+                        <label for="pageSize" class="me-2 mb-0">Page Size:</label>
+                        <select id="pageSize" class="form-select w-auto" name="pageSize">
+                            <option th:selected="${students.pageable.pageSize == 10}" value="10">10</option>
+                            <option th:selected="${students.pageable.pageSize == 20}" value="20">20</option>
+                            <option th:selected="${students.pageable.pageSize == 50}" value="50">50</option>
+                        </select>
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination mb-0">
+                            <li class="page-item" th:if="${!students.first}">
+                                <button name="pageNumber" th:value="${students.number}"
+                                        class="page-link text-black" aria-label="Previous">
+                                    <span class="text-black">Previous</span>
+                                </button>
+                            </li>
+                            <li th:each="page : ${#numbers.sequence(1, students.totalPages)}" class="page-item">
+                                <button name="pageNumber" th:class="${page == students.number + 1} ? 'page-link text-white bg-info border border-info' : 'page-link text-black'"
+                                        th:value="${page}" th:text="${page}"></button>
+                            </li>
+                            <li class="page-item" th:if="${!students.last}">
+                                <button class="page-link" th:value="${students.number + 2}" name="pageNumber" aria-label="Next">
+                                    <span class="text-black">Next</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
