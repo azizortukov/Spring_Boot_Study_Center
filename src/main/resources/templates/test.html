@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="row m-4">
+    <div class="col-10 offset-1">
+        <div class="d-flex my-5 ">
+            <form class="d-flex ms-3 me-auto" role="search" action="/" method="get">
+                <input name="search-name" class="form-control me-2" type="search" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-outline-info  ml-4" type="submit">Search</button>
+            </form>
+            <a href="/admin/group/action" class="btn btn-info text-white me-3">Add Group</a>
+        </div>
+
+        <div class="p-4">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>#</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="vertical-align: middle" th:each="group : ${groups}">
+                    <td th:text="${group.id}"></td>
+                    <td th:text="${group.name}"></td>
+                    <td><a th:href="'/admin/group/info?categoryId=' + ${group.id}"
+                           class="btn btn-secondary px-4 text-white">Info</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="/admin/group" method="get">
+                <div class="d-flex justify-content-end align-items-center mt-5">
+
+                    <div class="d-flex align-items-center me-4">
+                        <label for="pageSize" class="me-2 mb-0">Page Size:</label>
+                        <select id="pageSize" class="form-select w-auto">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination mb-0">
+                            <li class="page-item disabled">
+                                <button name="pageNumber" class="page-link text-black" aria-label="Previous">
+                                    <span aria-hidden="true">Previous</span>
+                                </button>
+                            </li>
+                            <li class="page-item active"><button class="page-link text-white bg-info border border-info">1</button></li>
+                            <li class="page-item"><a class="page-link text-black" name="pageNumber" >2</a></li>
+                            <li class="page-item"><a class="page-link text-black" name="pageNumber" >3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" name="pageNumber"  aria-label="Next">
+                                    <span aria-hidden="true" class="text-black">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

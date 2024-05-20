@@ -9,7 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import uz.anas.study_center.error.LoginHandler;
+import uz.anas.study_center.error.LoginFailureHandler;
+import uz.anas.study_center.error.LoginSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -18,32 +19,28 @@ import uz.anas.study_center.error.LoginHandler;
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-    private final LoginHandler loginHandler;
+    private final LoginFailureHandler loginFailureHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http.authorizeHttpRequests(manager -> {
             manager
-                    .requestMatchers("/","/login", "/sign-up", "/css/**").permitAll()
+                    .requestMatchers("/","/login", "/sign-up", "/css/**", "/logout").permitAll()
                     .anyRequest().authenticated();
         });
         http.formLogin(manager -> {
             manager
                     .loginPage("/login")
-                    .failureHandler(loginHandler);
+                    .failureHandler(loginFailureHandler)
+                    .successHandler(loginSuccessHandler);
         });
         http.rememberMe(manager -> {
             manager
                     .useSecureCookie(false)
                     .rememberMeParameter("rem_me")
                     .tokenValiditySeconds(60 * 60 * 24 * 30);
-        });
-
-        http.logout(manager -> {
-            manager.logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID");
         });
 
         http.userDetailsService(customUserDetailsService);

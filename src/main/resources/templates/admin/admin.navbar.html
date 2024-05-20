@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link th:if="${groups == null && students == null && payments == null && timetables == null}" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>Admin</title>
+</head>
+<body>
+<div class="col-10 offset-1" th:fragment="admin-navbar">
+    <nav class="navbar navbar-expand bg-body-tertiary m-4 shadow rounded">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="https://tse3.mm.bing.net/th/id/OIG3.02eRDG3fPXtgB9Znc9wn?pid=ImgGn" alt="Logo" height="50" class="d-inline-block align-top mx-3"></a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${groups != null} ? 'nav-link active' : 'nav-link'" href="/admin/group">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${students != null} ? 'nav-link active' : 'nav-link'" href="/admin/student">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${payments != null} ? 'nav-link active' : 'nav-link'" href="/admin/payment">Payments</a>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${timetables != null} ? 'nav-link active' : 'nav-link'" href="/admin/timetable">Timetable</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
+                        sec:authentication="name" aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/admin/my_profile">My Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

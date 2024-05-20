@@ -10,4 +10,5 @@ public interface RoleService {
     boolean exists(RoleName name);
     void save(Role role);
 
+    Role getByName(RoleName roleName);
 }

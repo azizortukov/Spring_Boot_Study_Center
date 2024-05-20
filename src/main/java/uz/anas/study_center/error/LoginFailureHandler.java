@@ -10,10 +10,17 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class LoginHandler implements AuthenticationFailureHandler {
+public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException{
-        response.sendRedirect("/login?error=Bad%20Credentials");
+        String errorMessage;
+        if(exception.getMessage().equalsIgnoreCase("Bad credentials")) {
+            errorMessage = "Incorrect password.";
+            response.sendRedirect("/login?error=" + errorMessage);
+        } else {
+            errorMessage = "Number is not registered";
+            response.sendRedirect("/login?notFound=" + errorMessage);
+        }
     }
 }
