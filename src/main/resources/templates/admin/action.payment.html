@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Product page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="row mt-4">
+    <div class="col-4 offset-4">
+        <div class="card p-2">
+            <h1 class="text-center">Add Payment</h1>
+            <form method="post" action="/admin/payment/add">
+                <input type="hidden" name="_csrf" th:value="${_csrf.getToken()}">
+                <select name="studentId" class="form-control my-4">
+                    <option value="" selected disabled>Select Student</option>
+                    <option th:each="student : ${students}" th:value="${student.id}"
+                            th:text="'+998' + ${student.phoneNumber}"></option>
+                </select>
+                <input name="amount" class="form-control my-4" type="number" placeholder="Amount" required="">
+                <select name="payType" class="form-control my-4">
+                    <option value="" selected disabled>Select Payment type</option>
+                    <option th:each="type : ${paymentTypes}" th:value="${type}"
+                            th:text="${type}"></option>
+                </select>
+                <div class="text-center">
+                    <button class="btn btn-info text-white mx-4 px-5" type="submit">Save</button>
+                    <a class="btn btn-dark px-5" href="/">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

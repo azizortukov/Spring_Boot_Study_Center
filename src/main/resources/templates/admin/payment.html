@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:insert="admin/admin.navbar::admin-navbar"></th:block>
+<div class="row m-4">
+    <div class="col-10 offset-1">
+        <div class="d-flex my-5 align-content-center">
+            <form class="d-flex ms-3 me-auto" role="search" action="/admin/payment" method="get">
+                <div class="d-flex form-group align-content-center">
+                    <label for="startDate" class="me-3 align-content-center">From: </label>
+                    <input type="datetime-local" class="form-control" id="startDate" name="fromDate" required>
+                </div>
+                <div class="d-flex justify-content-center align-content-center form-group ms-5">
+                    <label for="endDate" class="me-3 align-content-center">To: </label>
+                    <input type="datetime-local" class="form-control" id="endDate" name="toDate" required>
+                </div>
+                <button class="btn btn-outline-info ms-3" type="submit">Search</button>
+            </form>
+            <a href="/admin/payment/action" class="btn btn-info text-white text-center me-3">Add Payment</a>
+        </div>
+
+        <div class="p-4">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Student full name</th>
+                    <th>PhoneNumber</th>
+                    <th>Amount</th>
+                    <th>Pay type</th>
+                    <th>Created time</th>
+                    <th>Info</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="vertical-align: middle" th:each="payment : ${payments.getContent}">
+                    <td th:text="${payment.student.firstName} + ' ' + ${payment.student.lastName}"></td>
+                    <td th:text="'+998' + ${payment.student.phoneNumber}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.payType}"></td>
+                    <td th:text="${payment.createdAtFormatted()}"></td>
+                    <td><a th:href="'/admin/payment/info?paymentId=' + ${payment.id}" class="btn btn-secondary px-4 text-white">More info</a></td>
+                </tr>
+                </tbody>
+            </table>
+<!--            pagination-->
+            <form action="/admin/group" method="get">
+                <div class="d-flex justify-content-center align-items-center mt-5">
+
+                    <div class="d-flex align-items-center me-4">
+                        <label for="pageSize" class="me-2 mb-0">Page Size:</label>
+                        <select id="pageSize" class="form-select w-auto">
+                            <option th:selected="${payments.getPageable().getPageSize() == 10}" value="10">10</option>
+                            <option th:selected="${payments.getPageable().getPageSize() == 20}" value="20">20</option>
+                            <option th:selected="${payments.getPageable().getPageSize() == 50}" value="50">50</option>
+                        </select>
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination mb-0">
+                            <li class="page-item" th:if="${!payments.isFirst()}">
+                                <button name="pageNumber" th:value="${payments.getNumber() - 1}" class="page-link text-black" aria-label="Previous">
+                                    <span class="text-black">Previous</span>
+                                </button>
+                            </li>
+                            <li th:each="page : ${#numbers.sequence(1, payments.getTotalPages())}" th:class="${page == payments.getNumber()} ? 'page-item active' : 'page-item'">
+                                <button th:class="${page == payments.getNumber()} ? 'page-link text-white bg-info border border-info' : 'page-link'"
+                                        th:value="${page}"  th:text="${page}"></button></li>
+                            <li class="page-item" th:if="${!payments.isLast()}">
+                                <button class="page-link" th:value="${payments.getNumber() + 2}" name="pageNumber" value=""  aria-label="Next">
+                                    <span class="text-black">Next</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

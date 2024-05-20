@@ -33,9 +33,14 @@ public class UserServiceImpl implements UserService  {
         userRepo.save(User.builder()
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
-                        .roles(List.of(roleService.getByName(RoleName.ROLE_STUDENT)))
+                        .roles(List.of(roleService.getByName(RoleName.ROLE_USER)))
                         .phoneNumber(user.getPhoneNumber())
                         .password(passwordEncoder.encode(user.getPassword()))
                 .build());
+    }
+
+    @Override
+    public List<User> getAllStudents() {
+        return userRepo.findByRoleName(RoleName.ROLE_STUDENT.name());
     }
 }

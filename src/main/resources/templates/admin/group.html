@@ -14,7 +14,7 @@
                 <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info  ml-4" type="submit">Search</button>
             </form>
-            <a href="/admin/group/action" class="btn btn-info text-white text-center">Add Group</a>
+            <a href="/admin/group/action" class="btn btn-info text-white text-center me-3">Add Group</a>
         </div>
 
         <div class="p-4">
@@ -30,7 +30,7 @@
                 <tr style="vertical-align: middle" th:each="group : ${groups.getContent()}">
                     <td th:text="${group.id}"></td>
                     <td th:text="${group.name}"></td>
-                    <td><a th:href="'/admin/group/info?categoryId=' + ${group.id}" class="btn btn-secondary px-4 text-white">Info</a></td>
+                    <td><a th:href="'/admin/group/info?categoryId=' + ${group.id}" class="btn btn-secondary px-4 text-white">More info</a></td>
                 </tr>
                 </tbody>
             </table>

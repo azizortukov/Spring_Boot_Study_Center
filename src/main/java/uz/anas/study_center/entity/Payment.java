@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uz.anas.study_center.entity.enums.PayType;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,12 +24,18 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User student;
     @Min(value = 1, message = "Amount must be greater than zero!")
     private Integer amount;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PayType payType;
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    public String createdAtFormatted() {
+        return createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 
 
 }

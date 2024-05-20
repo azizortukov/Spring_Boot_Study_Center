@@ -1,4 +1,4 @@
-package uz.anas.study_center.controller.adminController;
+package uz.anas.study_center.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +35,12 @@ public class GroupController {
     public String addGroup(@ModelAttribute Group group){
         groupService.save(group);
         return "redirect:/admin/group";
+    }
+
+    //TODO create a group info
+    @GetMapping("/info")
+    public String groupInfo(Model model){
+        return "admin/group-info";
     }
 
 }

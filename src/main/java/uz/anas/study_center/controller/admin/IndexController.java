@@ -1,4 +1,4 @@
-package uz.anas.study_center.controller.adminController;
+package uz.anas.study_center.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
