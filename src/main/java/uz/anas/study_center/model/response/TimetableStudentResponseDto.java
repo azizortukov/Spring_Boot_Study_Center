@@ -1,5 +1,8 @@
 package uz.anas.study_center.model.response;
 
-public record TimetableStudentResponseDto(String phoneNumber, boolean[] attendances) {
+public interface TimetableStudentResponseDto {
+
+    String getPhoneNumber();
+    Boolean[] getAttendances();
 
 }

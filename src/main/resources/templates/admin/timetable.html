@@ -42,9 +42,9 @@
                     <!--                in <tr> tag loop the every student-->
                     <tr class="align-content-center" th:each="timetableStudent : ${timetableStudents}">
                         <!--                    first student name-->
-                        <td class="align-content-center" th:text="${timetableStudent.phoneNumber()}" ></td>
+                        <td class="align-content-center" th:text="${timetableStudent.phoneNumber}" ></td>
                         <!--                    and then his/her attendences-->
-                        <td th:each="attendance : ${timetableStudent.attendances()}">
+                        <td th:each="attendance : ${timetableStudent.attendances}">
                             <button th:text="${attendance}" th:class="${attendance == true} ? 'btn btn-success' : 'btn btn-danger'"
                                     name="studentAttendanceId"></button>
                         </td>

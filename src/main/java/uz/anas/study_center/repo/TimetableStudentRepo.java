@@ -3,6 +3,7 @@ package uz.anas.study_center.repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import uz.anas.study_center.entity.TimetableStudent;
+import uz.anas.study_center.model.response.TimetableStudentResponseDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ public interface TimetableStudentRepo extends JpaRepository<TimetableStudent, UU
             where tt.id = ?1
             group by u.id
             """)
-    List<Object[]> findAllByTimetable(UUID timetableId);
+    List<TimetableStudentResponseDto> findAllByTimetable(UUID timetableId);
 
 
 //    select tts.* from timetable_student tts

@@ -17,14 +17,7 @@ public class TimetableStudentServiceImpl implements TimetableStudentService {
 
     @Override
     public List<TimetableStudentResponseDto> findAllByTimetable(Timetable timetable) {
-        List<Object[]> ttStudents = timetableStudentRepo.findAllByTimetable(timetable.getId());
-        return ttStudents.stream().map(this::mapToDto).toList();
-    }
-
-    private TimetableStudentResponseDto mapToDto(Object[] item) {
-       return new TimetableStudentResponseDto(
-               (String)item[0], (boolean[])item[1]
-       );
+        return timetableStudentRepo.findAllByTimetable(timetable.getId());
     }
 
     @Override

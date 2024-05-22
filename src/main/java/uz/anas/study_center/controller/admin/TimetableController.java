@@ -39,6 +39,7 @@ public class TimetableController {
         List<Timetable> timetables = timetableService.findAll();
         model.addAttribute("timetables", timetables);
         model.addAttribute("timetableStudents", timetableStudentService.findAllByTimetable(timetables.getFirst()));
+        model.addAttribute("selectedGroupId", timetables.getFirst().getGroup().getId());
         return "admin/timetable";
     }
 
