@@ -15,4 +15,5 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     public StudentAttendance save(StudentAttendance studentAttendance) {
         return studentAttendanceRepo.save(studentAttendance);
     }
+
 }

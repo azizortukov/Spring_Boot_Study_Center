@@ -26,7 +26,7 @@ public class Payment{
     @ManyToOne
     private User student;
     @Min(value = 1, message = "Amount must be greater than zero!")
-    private Integer amount;
+    private int amount;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PayType payType;

@@ -18,7 +18,7 @@ public class StudentAttendance{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TimetableStudent timetableStudent;
     private Integer lessonOrder;
     private Boolean attendance;

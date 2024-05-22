@@ -21,5 +21,6 @@ public class Timetable {
     @ManyToOne
     private Group group;
     private Integer currentLesson;
+    private String name;
 
 }

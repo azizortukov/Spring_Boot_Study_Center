@@ -23,6 +23,6 @@ public class Course{
     private UUID id;
     private String name;
     private String description;
-    private Integer price;
+    private int price;
 
 }

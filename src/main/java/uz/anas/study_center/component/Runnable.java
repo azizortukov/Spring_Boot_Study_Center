@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import uz.anas.study_center.entity.*;
 import uz.anas.study_center.entity.enums.RoleName;
 import uz.anas.study_center.service.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -60,6 +61,7 @@ public class Runnable implements CommandLineRunner {
 
         //Adding courses, its groups, groups' timetables, students to timetable
         if (courseService.findAll().isEmpty() && groupService.findAll().isEmpty()) {
+            count = 0;
             for (int i = 1; i <= 10; i++) {
                 Course course = courseService.save(Course.builder()
                         .price(random.nextInt(90, 150))
@@ -72,17 +74,20 @@ public class Runnable implements CommandLineRunner {
                             .build());
                     Timetable timetable = timetableService.save(Timetable.builder()
                             .currentLesson(1)
+                            .name("Timetable " + count++)
                             .group(group)
                             .build());
-                    TimetableStudent.builder()
+                    TimetableStudent timetableStudent = TimetableStudent.builder()
                             .timetable(timetable)
                             .student(userService.save(User.builder()
-                                    .phoneNumber(String.valueOf(random.nextInt(194385320,986676787)))
+                                    .phoneNumber(String.valueOf(random.nextInt(194385320, 986676787)))
                                     .password(passwordEncoder.encode("123"))
                                     .roles(List.of(roleService.getByName(RoleName.ROLE_STUDENT)))
                                     .build()))
-                            .attendances(generateAttendances())
                             .build();
+                    timetableStudent.setAttendances(generateAttendances(timetableStudent));
+                    timetableStudentService.save(timetableStudent);
+                    count++;
                 }
             }
         }
@@ -90,15 +95,15 @@ public class Runnable implements CommandLineRunner {
     }
 
     //Creating a default 12 lesson for a timetable as timetable is one month and 12 lesson would be there
-    private List<StudentAttendance> generateAttendances() {
+    private List<StudentAttendance> generateAttendances(TimetableStudent timetableStudent) {
         List<StudentAttendance> attendances = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             StudentAttendance studentAttendance = StudentAttendance.builder()
                     .attendance(false)
                     .lessonOrder(i)
+                    .timetableStudent(timetableStudent)
                     .build();
-            StudentAttendance saved = studentAttendanceService.save(studentAttendance);
-            attendances.add(saved);
+            attendances.add(studentAttendance);
         }
         return attendances;
     }

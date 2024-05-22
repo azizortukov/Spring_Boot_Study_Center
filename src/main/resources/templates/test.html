@@ -6,67 +6,159 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="row m-4">
-    <div class="col-10 offset-1">
-        <div class="d-flex my-5 ">
-            <form class="d-flex ms-3 me-auto" role="search" action="/" method="get">
-                <input name="search-name" class="form-control me-2" type="search" placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-info  ml-4" type="submit">Search</button>
-            </form>
-            <a href="/admin/group/action" class="btn btn-info text-white me-3">Add Group</a>
+<div class="col-10 offset-1">
+    <nav class="navbar navbar-expand bg-body-tertiary m-4 shadow rounded">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img
+                    src="https://tse3.mm.bing.net/th/id/OIG3.02eRDG3fPXtgB9Znc9wn?pid=ImgGn" alt="Logo" height="50"
+                    class="rounded d-inline-block align-top mx-3"></a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/group">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/student">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/payment">Payments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/timetable">Timetable</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle me-3" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Username
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/admin/my_profile">My Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                </ul>
+            </div>
         </div>
+    </nav>
+</div>
+<form action="#">
+<div class="row ">
+    <div class="col-10 offset-1">
+        <div class="mx-5 overflow-x-auto pb-4 mt-5"
+             style="max-height: 100px; white-space: nowrap; overflow-x: auto;">
 
-        <div class="p-4">
-            <table class="table table-striped">
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+                <button name="groupId" class="btn btn-dark mx-2 px-4" href="#">Group 1</button>
+
+        </div>
+    </div>
+
+    <div class="col-10 offset-1 mt-4">
+        <div class="overflow-x-auto mx-5 pb-2" style=" white-space: nowrap; overflow-x: auto;">
+            <table class="table">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>#</th>
+                <tr style="vertical-align: middle;">
+                    <th style="min-width: 250px;">
+                        <div class="input-group">
+                            <select name="timetableId" class="form-control">
+                                <option value="">Timetable 1</option>
+                                <option value="">Timetable 2</option>
+                            </select>
+                            <button class="btn btn-outline-info">Select</button>
+                        </div>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
+                    <th class="mx-3">
+                        <button class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                    </th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr style="vertical-align: middle" th:each="group : ${groups}">
-                    <td th:text="${group.id}"></td>
-                    <td th:text="${group.name}"></td>
-                    <td><a th:href="'/admin/group/info?categoryId=' + ${group.id}"
-                           class="btn btn-secondary px-4 text-white">Info</a></td>
+                <tbody class="text-center">
+                <!--                in <tr> tag loop the every student-->
+                <tr class="align-content-center">
+                    <!--                    first student name-->
+                    <td class="align-content-center">Student name</td>
+                    <!--                    and then his/her attendences-->
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                </tr>
+                <tr class="align-content-center">
+                    <!--                    first student name-->
+                    <td class="align-content-center">Student name</td>
+                    <!--                    and then his/her attendences-->
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
+                    <td><button class="btn btn-danger" name="studentAttendanceNumber">false</button></td>
                 </tr>
                 </tbody>
             </table>
-            <form action="/admin/group" method="get">
-                <div class="d-flex justify-content-end align-items-center mt-5">
-
-                    <div class="d-flex align-items-center me-4">
-                        <label for="pageSize" class="me-2 mb-0">Page Size:</label>
-                        <select id="pageSize" class="form-select w-auto">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <button name="pageNumber" class="page-link text-black" aria-label="Previous">
-                                    <span aria-hidden="true">Previous</span>
-                                </button>
-                            </li>
-                            <li class="page-item active"><button class="page-link text-white bg-info border border-info">1</button></li>
-                            <li class="page-item"><a class="page-link text-black" name="pageNumber" >2</a></li>
-                            <li class="page-item"><a class="page-link text-black" name="pageNumber" >3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" name="pageNumber"  aria-label="Next">
-                                    <span aria-hidden="true" class="text-black">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </form>
         </div>
     </div>
 </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

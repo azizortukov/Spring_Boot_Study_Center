@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<th:block th:insert="admin/admin.navbar::admin-navbar"></th:block>
+<form action="/admin/timetable">
+    <div class="row ">
+        <div class="col-10 offset-1">
+            <div class="mx-5 overflow-x-auto pb-4 mt-5"
+                 style="max-height: 100px; white-space: nowrap; overflow-x: auto;">
+                <button name="groupId" class="btn btn-dark mx-2 px-4"
+                th:each="group :${groups}" th:value="${group.id}" th:text="${group.name}"
+                ></button>
+            </div>
+        </div>
+
+        <div class="col-10 offset-1 mt-4">
+            <div class="overflow-x-auto mx-5 pb-2" style=" white-space: nowrap; overflow-x: auto;">
+                <table class="table">
+                    <thead>
+                    <tr style="vertical-align: middle;">
+                        <th style="min-width: 250px;">
+                            <div class="input-group">
+                                <select name="timetableId" class="form-control">
+                                    <option th:each="timetable : ${timetables}" th:value="${timetable.id}"
+                                            th:text="${timetable.name}"></option>
+                                </select>
+                                <button class="btn btn-outline-info">Select</button>
+                            </div>
+                        </th>
+                        <th th:each="number : ${#numbers.sequence(1, 12)}" class="mx-3">
+                            <button th:text="'Lesson ' + ${number}" th:value="${number}" class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <!--                in <tr> tag loop the every student-->
+                    <tr class="align-content-center" th:each="timetableStudent : ${timetableStudents}">
+                        <!--                    first student name-->
+                        <td class="align-content-center" th:text="${timetableStudent.phoneNumber()}" ></td>
+                        <!--                    and then his/her attendences-->
+                        <td th:each="attendance : ${timetableStudent.attendances()}">
+                            <button th:text="${attendance}" th:class="${attendance == true} ? 'btn btn-success' : 'btn btn-danger'"
+                                    name="studentAttendanceId"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

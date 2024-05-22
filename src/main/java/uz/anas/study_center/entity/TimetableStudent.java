@@ -23,9 +23,9 @@ public class TimetableStudent{
     private User student;
     @ManyToOne
     private Timetable timetable;
-    private Integer paid;
+    private int paid;
     private boolean paymentStatus;
-    @OneToMany(mappedBy = "timetableStudent")
+    @OneToMany(mappedBy = "timetableStudent", cascade = CascadeType.ALL)
     List<StudentAttendance> attendances;
 
 }

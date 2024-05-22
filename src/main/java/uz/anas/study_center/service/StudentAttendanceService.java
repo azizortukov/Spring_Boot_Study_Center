@@ -7,4 +7,5 @@ import uz.anas.study_center.entity.StudentAttendance;
 public interface StudentAttendanceService {
 
     StudentAttendance save(StudentAttendance studentAttendance);
+
 }
