@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService  {
+public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final RoleServiceImpl roleService;
@@ -31,14 +31,8 @@ public class UserServiceImpl implements UserService  {
     }
 
     @Override
-    public void saveUserRequestDto(UserRequestDto user) {
-        userRepo.save(User.builder()
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .roles(List.of(roleService.getByName(RoleName.ROLE_USER)))
-                        .phoneNumber(user.getPhoneNumber())
-                        .password(passwordEncoder.encode(user.getPassword()))
-                .build());
+    public User save(User user) {
+        return userRepo.save(user);
     }
 
     @Override
@@ -47,12 +41,24 @@ public class UserServiceImpl implements UserService  {
     }
 
     @Override
+    public void saveUserRequestDto(UserRequestDto user) {
+        userRepo.save(User.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .roles(List.of(roleService.getByName(RoleName.ROLE_USER)))
+                .phoneNumber(user.getPhoneNumber())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .build());
+    }
+
+    @Override
     public Page<User> getAllStudentsContaining(Integer pageNumber, Integer pageSize, String search) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         if (search != null && !search.isEmpty()) {
             return userRepo.findAllByRoleNameAndPhoneNumber(RoleName.ROLE_STUDENT.name(), search, pageRequest);
-        }else {
+        } else {
             return userRepo.findByRoleNamePaginated(RoleName.ROLE_STUDENT.name(), pageRequest);
         }
     }
+
 }

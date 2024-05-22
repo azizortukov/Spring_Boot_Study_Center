@@ -18,12 +18,12 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "payments")
-public class Payment {
+public class Payment{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User student;
     @Min(value = 1, message = "Amount must be greater than zero!")
     private Integer amount;

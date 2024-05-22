@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
 @Entity
+@Builder
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 

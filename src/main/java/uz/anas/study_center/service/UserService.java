@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getAllStudents();
 
     Page<User> getAllStudentsContaining(Integer pageNumber, Integer pageSize, String search);
+
+    User save(User user);
 }

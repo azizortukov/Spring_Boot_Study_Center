@@ -8,7 +8,7 @@ import uz.anas.study_center.entity.enums.RoleName;
 public interface RoleService {
 
     boolean exists(RoleName name);
-    void save(Role role);
+    Role save(Role role);
 
     Role getByName(RoleName roleName);
 }

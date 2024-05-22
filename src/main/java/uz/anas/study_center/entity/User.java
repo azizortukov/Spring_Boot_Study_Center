@@ -18,10 +18,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String firstName;
     private String lastName;
     @Column(unique = true, nullable = false)

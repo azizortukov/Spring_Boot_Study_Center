@@ -1,8 +1,10 @@
 package uz.anas.study_center.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -11,15 +13,15 @@ import java.util.UUID;
 @Builder
 @Data
 @Entity
-@Table(name = "groups")
-public class Group{
+public class StudentAttendance{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String name;
     @ManyToOne
-    @NotNull
-    private Course course;
+    private TimetableStudent timetableStudent;
+    private Integer lessonOrder;
+    private Boolean attendance;
+
 
 }
