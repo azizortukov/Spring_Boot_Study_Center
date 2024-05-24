@@ -17,4 +17,6 @@ public interface TimetableService {
     List<Timetable> findAllByGroupIdAndMentor(UUID group, User mentor);
 
     boolean checkIdInCollection(List<Timetable> timetables, UUID timetableId);
+
+    Timetable findById(UUID timetableId);
 }

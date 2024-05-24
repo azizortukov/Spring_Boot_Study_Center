@@ -37,4 +37,10 @@ public class TimetableServiceImpl implements TimetableService {
         return timetables.stream()
                 .anyMatch(timetable -> timetable.getId().equals(timetableId));
     }
+
+    //TODO handle the null of the timetable, create no found timetable exception
+    @Override
+    public Timetable findById(UUID timetableId) {
+        return timetableRepo.findById(timetableId).orElse(null);
+    }
 }

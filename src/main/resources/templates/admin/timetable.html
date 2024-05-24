@@ -47,10 +47,9 @@
                         <td class="align-content-center" th:text="${timetableStudent.phoneNumber}" ></td>
                         <!--                    and then his/her attendences-->
                         <td th:each="i : ${#numbers.sequence(0, 11)}">
-                            <button th:text="${timetableStudent.lessonDates[i]}" th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white' : 'btn btn-danger'"
-
+                            <button th:text="${timetableStudent.attendances[i]}" th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white' : 'btn btn-danger'"
+                                    th:disabled="${i != currentLesson}" th:unless="${i > currentLesson}"
                                     name="studentAttendanceId" th:value="${timetableStudent.timetableStudentId} + '/' + ${i}"></button>
-                            <!--                                    th:disabled="${timetableStudent.lessonDates[i].dayOfMonth == today.dayOfMonth()}" if the localDate is fixed-->
                         </td>
                     </tr>
                     </tbody>
