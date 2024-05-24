@@ -42,14 +42,17 @@ public class AuthController {
     @PostMapping("/sign-up")
     public String register(@ModelAttribute UserRequestDto userRequestDto, Model model) {
         model.addAttribute("user", userRequestDto);
+        //Process of checking for number existing in users
         if (userService.getByPhoneNumber(userRequestDto.getPhoneNumber()) != null) {
             model.addAttribute("phoneInUse", true);
             return "auth/sign-up";
         }
+        //Check process of the registering number is only numbers
         if (!userRequestDto.getPhoneNumber().matches("\\d{9}")) {
             model.addAttribute("phoneNumberWrong", true);
             return "auth/sign-up";
         }
+        //Process of password confirmation is right
         if (!userService.confirmPassword(userRequestDto)) {
             model.addAttribute("confirmPasswordWrong", true);
             return "auth/sign-up";

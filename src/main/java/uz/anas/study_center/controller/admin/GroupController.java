@@ -22,6 +22,7 @@ public class GroupController {
             @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             Model model){
+        //Pagination of list groups before giving to frontend
         model.addAttribute("groups", groupService.getAll(pageNumber - 1, pageSize, search));
         model.addAttribute("search", search);
         return "admin/group";

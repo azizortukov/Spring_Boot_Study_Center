@@ -24,6 +24,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             } else if (authority.getAuthority().equals(RoleName.ROLE_STUDENT.name())) {
                 response.sendRedirect("/student");
                 return;
+            } else if (authority.getAuthority().equals(RoleName.ROLE_MENTOR.name())) {
+                response.sendRedirect("/admin/timetable");
+                return;
             }
         }
         response.sendRedirect("/");

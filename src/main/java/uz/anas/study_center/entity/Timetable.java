@@ -22,5 +22,7 @@ public class Timetable {
     private Group group;
     private Integer currentLesson;
     private String name;
+    @ManyToOne
+    private User mentor;
 
 }

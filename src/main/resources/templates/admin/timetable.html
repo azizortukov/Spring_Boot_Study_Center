@@ -13,8 +13,8 @@
         <div class="col-10 offset-1">
             <div class="mx-5 overflow-x-auto pb-4 mt-5"
                  style="max-height: 100px; white-space: nowrap; overflow-x: auto;">
-                <button name="groupId" class="btn btn-dark mx-2 px-4"
-                th:each="group :${groups}" th:value="${group.id}" th:text="${group.name}"
+                <button name="groupId" th:class="${selectedGroupId == group.id} ? 'btn btn-info mx-2 px-4 text-white' : 'btn btn-secondary mx-2 px-4'"
+                th:each="group :${groups}"  th:value="${group.id}" th:text="${group.name}"
                 ></button>
             </div>
         </div>
@@ -28,13 +28,15 @@
                             <div class="input-group">
                                 <select name="timetableId" class="form-control">
                                     <option th:each="timetable : ${timetables}" th:value="${timetable.id}"
-                                            th:text="${timetable.name}"></option>
+                                            th:text="${timetable.name}" th:selected="${selectedTimetableId != null && selectedTimetableId == timetable.id}"></option>
                                 </select>
                                 <button class="btn btn-outline-info">Select</button>
                             </div>
                         </th>
+<!--                        Chosing lesson is for starting lesson, however right now it's not our problem-->
                         <th th:each="number : ${#numbers.sequence(1, 12)}" class="mx-3">
-                            <button th:text="'Lesson ' + ${number}" th:value="${number}" class="btn btn-light text-dark" name="lessonNumber">Lesson 1</button>
+                            <button th:text="'Lesson ' + ${number}" th:value="${number}" class="btn btn-light text-dark"
+                                    name="lessonNumber" disabled>Lesson 1</button>
                         </th>
                     </tr>
                     </thead>
@@ -44,9 +46,11 @@
                         <!--                    first student name-->
                         <td class="align-content-center" th:text="${timetableStudent.phoneNumber}" ></td>
                         <!--                    and then his/her attendences-->
-                        <td th:each="attendance : ${timetableStudent.attendances}">
-                            <button th:text="${attendance}" th:class="${attendance == true} ? 'btn btn-success' : 'btn btn-danger'"
-                                    name="studentAttendanceId"></button>
+                        <td th:each="i : ${#numbers.sequence(0, 11)}">
+                            <button th:text="${timetableStudent.lessonDates[i]}" th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white' : 'btn btn-danger'"
+
+                                    name="studentAttendanceId" th:value="${timetableStudent.timetableStudentId} + '/' + ${i}"></button>
+                            <!--                                    th:disabled="${timetableStudent.lessonDates[i].dayOfMonth == today.dayOfMonth()}" if the localDate is fixed-->
                         </td>
                     </tr>
                     </tbody>

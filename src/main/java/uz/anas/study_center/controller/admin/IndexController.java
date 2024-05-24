@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@PreAuthorize(value = "hasRole('ROLE_ADMIN')")
+@PreAuthorize(value = "hasAnyRole('ROLE_ADMIN', 'ROLE_MENTOR')")
 public class IndexController {
 
+    //default page of admin
     @GetMapping
     public String index(){
         return "admin/admin.navbar";

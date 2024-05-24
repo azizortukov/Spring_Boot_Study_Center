@@ -9,6 +9,7 @@ import uz.anas.study_center.entity.*;
 import uz.anas.study_center.entity.enums.RoleName;
 import uz.anas.study_center.service.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,6 +27,8 @@ public class Runnable implements CommandLineRunner {
     private final StudentAttendanceServiceImpl studentAttendanceService;
     private final PasswordEncoder passwordEncoder;
 
+    Random random = new Random();
+
     //Initial data will be created if init.data is true in application properties
     //By default, it's false
     @Value("${init.data}")
@@ -41,7 +44,6 @@ public class Runnable implements CommandLineRunner {
 
     //Creating initial data method "mock data"
     private void initData() {
-        Random random = new Random();
         int count = 0;
 
         //Adding every possible role types to db and one user to every role
@@ -67,26 +69,24 @@ public class Runnable implements CommandLineRunner {
                         .price(random.nextInt(90, 150))
                         .name("Course" + i)
                         .build());
-                for (int j = 20; j <= 30; j++) {
+                for (int j = 20; j <= 22; j++) {
                     Group group = groupService.save(Group.builder()
                             .name("Group " + random.nextInt(1, 1000))
                             .course(course)
                             .build());
                     Timetable timetable = timetableService.save(Timetable.builder()
                             .currentLesson(1)
+                            .mentor(userService.save(User.builder()
+                                    .roles(List.of(roleService.getByName(RoleName.ROLE_MENTOR)))
+                                    .firstName("Teressa")
+                                    .lastName("Johnson")
+                                    .phoneNumber(String.valueOf(random.nextInt(100000000, 999999999)))
+                                    .password(passwordEncoder.encode("123"))
+                                    .build()))
                             .name("Timetable " + count++)
                             .group(group)
                             .build());
-                    TimetableStudent timetableStudent = TimetableStudent.builder()
-                            .timetable(timetable)
-                            .student(userService.save(User.builder()
-                                    .phoneNumber(String.valueOf(random.nextInt(194385320, 986676787)))
-                                    .password(passwordEncoder.encode("123"))
-                                    .roles(List.of(roleService.getByName(RoleName.ROLE_STUDENT)))
-                                    .build()))
-                            .build();
-                    timetableStudent.setAttendances(generateAttendances(timetableStudent));
-                    timetableStudentService.save(timetableStudent);
+                    generateTimeTableStudents(timetable);
                     count++;
                 }
             }
@@ -94,16 +94,35 @@ public class Runnable implements CommandLineRunner {
 
     }
 
+    private void generateTimeTableStudents(Timetable timetable) {
+        for (int i = 1; i <= 12; i++) {
+            TimetableStudent timetableStudent = TimetableStudent.builder()
+                    .student(userService.save(User.builder()
+                            .firstName("Student")
+                            .lastName("Studentov")
+                            .phoneNumber(String.valueOf(random.nextInt(100000000, 999999999)))
+                            .password(passwordEncoder.encode("123"))
+                            .roles(List.of(roleService.getByName(RoleName.ROLE_STUDENT)))
+                            .build()))
+                    .timetable(timetable)
+                    .build();
+            timetableStudentService.save(timetableStudent);
+            generateAttendances(timetableStudent);
+        }
+    }
+
     //Creating a default 12 lesson for a timetable as timetable is one month and 12 lesson would be there
     private List<StudentAttendance> generateAttendances(TimetableStudent timetableStudent) {
         List<StudentAttendance> attendances = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 0; i < 12; i++) {
             StudentAttendance studentAttendance = StudentAttendance.builder()
                     .attendance(false)
                     .lessonOrder(i)
                     .timetableStudent(timetableStudent)
+                    .lessonDate(LocalDate.now().plusDays(i * 2))
                     .build();
-            attendances.add(studentAttendance);
+            StudentAttendance saved = studentAttendanceService.save(studentAttendance);
+            attendances.add(saved);
         }
         return attendances;
     }

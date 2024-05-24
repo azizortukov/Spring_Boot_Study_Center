@@ -8,6 +8,7 @@ import uz.anas.study_center.entity.Group;
 import uz.anas.study_center.repo.GroupRepo;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class GroupServiceImpl implements GroupService  {
             return groupRepo.findAllByNameContainingIgnoreCase(search, pageRequest);
         }
         return groupRepo.findAll(pageRequest);
+    }
+
+    @Override
+    public List<Group> findAllByMentorId(UUID mentorId) {
+        return groupRepo.findAllByMentorId(mentorId);
     }
 
     @Override

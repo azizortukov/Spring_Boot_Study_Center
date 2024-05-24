@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,10 +19,11 @@ public class StudentAttendance{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private TimetableStudent timetableStudent;
     private Integer lessonOrder;
     private Boolean attendance;
+    private LocalDate lessonDate;
 
 
 }

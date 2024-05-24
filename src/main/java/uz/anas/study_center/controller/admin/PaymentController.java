@@ -28,6 +28,7 @@ public class PaymentController {
                         @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
                         @RequestParam(required = false, defaultValue = "10") Integer pageSize,
                         Model model) {
+        //Pagination list of payments before giving to the frontend
         model.addAttribute("payments", paymentService.getAll(pageNumber - 1, pageSize, fromDate, toDate));
         return "admin/payment";
     }
