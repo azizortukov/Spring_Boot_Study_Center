@@ -48,8 +48,10 @@
                         <!--                    and then his/her attendences-->
                         <td th:each="i : ${#numbers.sequence(0, 11)}">
                             <button th:text="${timetableStudent.attendances[i]}" th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white' : 'btn btn-danger'"
-                                    th:disabled="${i != currentLesson}" th:unless="${i > currentLesson}"
+                                    th:disabled="${timetableStudent.lessonDates[i] != today}"
+                                    th:unless="${today.before(timetableStudent.lessonDates[i])}"
                                     name="studentAttendanceId" th:value="${timetableStudent.timetableStudentId} + '/' + ${i}"></button>
+
                         </td>
                     </tr>
                     </tbody>

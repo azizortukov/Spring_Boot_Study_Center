@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uz.anas.study_center.entity.Timetable;
 import uz.anas.study_center.entity.User;
+import uz.anas.study_center.model.response.TimetableStudentResponseDto;
 import uz.anas.study_center.service.GroupServiceImpl;
 import uz.anas.study_center.service.StudentAttendanceServiceImpl;
 import uz.anas.study_center.service.TimetableServiceImpl;
 import uz.anas.study_center.service.TimetableStudentServiceImpl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,9 +74,13 @@ public class TimetableController {
         if(timetableId != null && timetableService.checkIdInCollection(timetables, timetableId)){
             chosenTimetableId = timetableId;
         }
+
         model.addAttribute("selectedTimetableId", chosenTimetableId);
-        model.addAttribute("currentLesson", timetableService.findById(chosenTimetableId).getCurrentLesson());
-        model.addAttribute("timetableStudents", timetableStudentService.findAllByTimetableId(chosenTimetableId));
+
+        model.addAttribute("today", Date.valueOf(LocalDate.now()));
+
+        List<TimetableStudentResponseDto> studentResponseDto = timetableStudentService.findAllByTimetableId(chosenTimetableId);
+        model.addAttribute("timetableStudents", studentResponseDto);
         return "admin/timetable";
     }
 
