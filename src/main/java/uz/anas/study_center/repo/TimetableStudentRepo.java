@@ -13,7 +13,9 @@ public interface TimetableStudentRepo extends JpaRepository<TimetableStudent, UU
 
     @Query(nativeQuery = true, value = """
             select tts.id as timetableStudentId, u.phone_number as phoneNumber,
-            array_agg(sa.attendance order by sa.lesson_order) as attendances from timetable_student tts
+            array_agg(sa.attendance order by sa.lesson_order) as attendances ,
+            array_agg(sa.lesson_date order by sa.lesson_order) as lessonDates
+            from timetable_student tts
             join public.timetable tt on tt.id = tts.timetable_id
             join public.student_attendance sa on tts.id = sa.timetable_student_id
             join public.users u on tts.student_id = u.id

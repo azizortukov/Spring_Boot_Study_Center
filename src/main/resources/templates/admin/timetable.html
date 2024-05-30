@@ -10,48 +10,48 @@
 <th:block th:insert="admin/admin.navbar::admin-navbar"></th:block>
 <form action="/admin/timetable">
     <div class="row ">
-        <div class="col-10 offset-1">
-            <div class="mx-5 overflow-x-auto pb-4 mt-5"
+        <div class="col-8 offset-1">
+            <div class="ms-5 overflow-x-auto pb-4 mt-5"
                  style="max-height: 100px; white-space: nowrap; overflow-x: auto;">
                 <button name="groupId" th:class="${selectedGroupId == group.id} ? 'btn btn-info mx-2 px-4 text-white' : 'btn btn-secondary mx-2 px-4'"
                 th:each="group :${groups}"  th:value="${group.id}" th:text="${group.name}"
                 ></button>
             </div>
         </div>
-
+        <div class="col-2 mt-5 text-end">
+            <button th:if="${started != null && started == true}"
+                    name="started" th:value="${false}" class="btn btn-outline-danger px-3 me-5" >End Lesson</button>
+        </div>
         <div class="col-10 offset-1 mt-4">
             <div class="overflow-x-auto mx-5 pb-2" style=" white-space: nowrap; overflow-x: auto;">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                     <tr style="vertical-align: middle;">
                         <th style="min-width: 250px;">
                             <div class="input-group">
                                 <select name="timetableId" class="form-control">
                                     <option th:each="timetable : ${timetables}" th:value="${timetable.id}"
-                                            th:text="${timetable.name}" th:selected="${selectedTimetableId != null && selectedTimetableId == timetable.id}"></option>
+                                            th:text="${timetable.name}" th:selected="${chosenTimetable != null && chosenTimetable.id == timetable.id}"></option>
                                 </select>
                                 <button class="btn btn-outline-info">Select</button>
                             </div>
                         </th>
-<!--                        Chosing lesson is for starting lesson, however right now it's not our problem-->
-                        <th th:each="number : ${#numbers.sequence(1, 12)}" class="mx-3">
-                            <button th:text="'Lesson ' + ${number}" th:value="${number}" class="btn btn-light text-dark"
-                                    name="lessonNumber" disabled>Lesson 1</button>
+                        <th th:each="number : ${#numbers.sequence(0, 11)}" class="mx-3">
+                            <button th:text="'Lesson ' + ${number + 1}"
+                                    th:disabled="${number != chosenTimetable.currentLesson || today != timetableStudents.first.lessonDates[number]}"
+                                    th:value="${true}" class="btn btn-light text-dark fw-bold"
+                                    name="started" >Lesson 1</button>
                         </th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
-                    <!--                in <tr> tag loop the every student-->
                     <tr class="align-content-center" th:each="timetableStudent : ${timetableStudents}">
-                        <!--                    first student name-->
-                        <td class="align-content-center" th:text="${timetableStudent.phoneNumber}" ></td>
-                        <!--                    and then his/her attendences-->
+                        <td class="align-content-center" th:text="'+998' + ${timetableStudent.phoneNumber}" ></td>
                         <td th:each="i : ${#numbers.sequence(0, 11)}">
-                            <button th:text="${timetableStudent.attendances[i]}" th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white' : 'btn btn-danger'"
-                                    th:disabled="${timetableStudent.lessonDates[i] != today}"
+                            <button th:class="${timetableStudent.attendances[i] == true} ? 'btn btn-info text-white py-3 px-4' : 'btn btn-danger py-3 px-4'"
+                                    th:disabled="${timetableStudent.lessonDates[i] != today || started != true}"
                                     th:unless="${today.before(timetableStudent.lessonDates[i])}"
                                     name="studentAttendanceId" th:value="${timetableStudent.timetableStudentId} + '/' + ${i}"></button>
-
                         </td>
                     </tr>
                     </tbody>

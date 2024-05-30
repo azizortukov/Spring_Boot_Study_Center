@@ -40,11 +40,10 @@ public class TimetableController {
             @RequestParam(required = false) UUID groupId,
             @RequestParam(required = false) UUID timetableId,
             @RequestParam(required = false) String studentAttendanceId,
+            @RequestParam(required = false) Boolean started,
             Authentication authentication,
             HttpSession session,
             Model model){
-
-
         User mentor = (User) authentication.getPrincipal();
         //Updating student attendance
         if (studentAttendanceId != null){
@@ -74,13 +73,24 @@ public class TimetableController {
         if(timetableId != null && timetableService.checkIdInCollection(timetables, timetableId)){
             chosenTimetableId = timetableId;
         }
-
-        model.addAttribute("selectedTimetableId", chosenTimetableId);
+        Timetable chosenTimetable = timetableService.findById(chosenTimetableId);
+        model.addAttribute("chosenTimetable", chosenTimetable);
 
         model.addAttribute("today", Date.valueOf(LocalDate.now()));
 
         List<TimetableStudentResponseDto> studentResponseDto = timetableStudentService.findAllByTimetableId(chosenTimetableId);
         model.addAttribute("timetableStudents", studentResponseDto);
+
+        if (started == null) {
+            started = (Boolean) session.getAttribute("started");
+        }else if (started){
+            session.setAttribute("started", started);
+        }else {
+            chosenTimetable.setCurrentLesson(chosenTimetable.getCurrentLesson() + 1);
+            timetableService.save(chosenTimetable);
+        }
+
+        model.addAttribute("started", started);
         return "admin/timetable";
     }
 
