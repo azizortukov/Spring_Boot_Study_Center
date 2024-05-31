@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable Page</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .scrollable {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Add Timetable</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <div class="form-group text-center">
+                <form action="/admin/configure/groupSelection">
+                <select class="form-control" id="groupSelect" name="selectedGroupId" >
+                    <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"
+                    th:selected="${selectedGroupId != null && selectedGroupId == group.id}"></option>
+                </select>
+                <button class="btn btn-outline-info mt-3" id="selectGroupBtn">Select Group</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-3">
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" class="form-control" id="startDate" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-4 me-4">
+            <h5 class="text-center">Course Students</h5>
+            <div class="list-group scrollable shadow rounded" id="availableStudents">
+                <form action="/admin/configure/addStudent">
+                <li class="list-group-item list-group-item-action" th:each="student : ${students}">
+                    <button class="btn ms-3" th:text="'+998' + ${student.phoneNumber}" name="studentId" th:value="${student.id}"></button>
+                </li>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h5 class="text-center">Group Students</h5>
+            <div class="list-group scrollable shadow rounded " id="timetableStudents">
+                <form action="/admin/configure/removeStudent">
+                <li class="list-group-item list-group-item-action" th:each="timetableStudent : ${timetableStudents}">
+                    <button class="btn ms-3" th:text="'+998' + ${timetableStudent.phoneNumber}" name="studentId" th:value="${student.id}"></button>
+                </li>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <button class="btn btn-secondary px-4">Back</button>
+        <button class="btn btn-info ms-4 px-4 text-white">Save</button>
+    </div>
+</div>
+</body>
+</html>

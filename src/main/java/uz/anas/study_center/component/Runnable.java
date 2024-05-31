@@ -10,7 +10,6 @@ import uz.anas.study_center.entity.enums.RoleName;
 import uz.anas.study_center.service.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,13 +17,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class Runnable implements CommandLineRunner {
 
-    private final RoleServiceImpl roleService;
-    private final GroupServiceImpl groupService;
-    private final CourseServiceImpl courseService;
-    private final UserServiceImpl userService;
-    private final TimetableServiceImpl timetableService;
-    private final TimetableStudentServiceImpl timetableStudentService;
-    private final StudentAttendanceServiceImpl studentAttendanceService;
+    private final RoleService roleService;
+    private final GroupService groupService;
+    private final CourseService courseService;
+    private final UserService userService;
+    private final TimetableService timetableService;
+    private final TimetableStudentService timetableStudentService;
+    private final StudentAttendanceService studentAttendanceService;
     private final PasswordEncoder passwordEncoder;
 
     Random random = new Random();
@@ -69,11 +68,11 @@ public class Runnable implements CommandLineRunner {
                         .price(random.nextInt(90, 150))
                         .name("Course" + i)
                         .build());
+                Group group = groupService.save(Group.builder()
+                        .name("Group " + i)
+                        .course(course)
+                        .build());
                 for (int j = 20; j <= 22; j++) {
-                    Group group = groupService.save(Group.builder()
-                            .name("Group " + random.nextInt(1, 1000))
-                            .course(course)
-                            .build());
                     Timetable timetable = timetableService.save(Timetable.builder()
                             .currentLesson(1)
                             .mentor(userService.save(User.builder()
@@ -112,8 +111,7 @@ public class Runnable implements CommandLineRunner {
     }
 
     //Creating a default 12 lesson for a timetable as timetable is one month and 12 lesson would be there
-    private List<StudentAttendance> generateAttendances(TimetableStudent timetableStudent) {
-        List<StudentAttendance> attendances = new ArrayList<>();
+    private void generateAttendances(TimetableStudent timetableStudent) {
         for (int i = 0; i < 12; i++) {
             StudentAttendance studentAttendance = StudentAttendance.builder()
                     .attendance(false)
@@ -122,8 +120,6 @@ public class Runnable implements CommandLineRunner {
                     .lessonDate(LocalDate.now().plusDays(i * 2))
                     .build();
             StudentAttendance saved = studentAttendanceService.save(studentAttendance);
-            attendances.add(saved);
         }
-        return attendances;
     }
 }

@@ -10,7 +10,9 @@ import uz.anas.study_center.entity.enums.RoleName;
 import uz.anas.study_center.model.request.UserRequestDto;
 import uz.anas.study_center.repo.UserRepo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         return userRepo.save(user);
+    }
+
+    @Override
+    public List<User> findAllByGroupId(UUID groupId) {
+        return userRepo.findAllByGroupId(groupId).orElse(new ArrayList<>());
+    }
+
+    @Override
+    public List<User> findAllExcludingGroupId(UUID groupId) {
+        return userRepo.findAllExcludingGroupId(groupId).orElse(new ArrayList<>());
     }
 
     @Override

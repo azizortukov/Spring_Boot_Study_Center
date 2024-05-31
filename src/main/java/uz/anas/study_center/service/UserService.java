@@ -6,6 +6,7 @@ import uz.anas.study_center.entity.User;
 import uz.anas.study_center.model.request.UserRequestDto;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface UserService {
@@ -21,4 +22,8 @@ public interface UserService {
     Page<User> getAllStudentsContaining(Integer pageNumber, Integer pageSize, String search);
 
     User save(User user);
+
+    List<User> findAllByGroupId(UUID groupId);
+
+    List<User> findAllExcludingGroupId(UUID groupId);
 }

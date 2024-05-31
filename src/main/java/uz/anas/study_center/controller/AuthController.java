@@ -39,6 +39,11 @@ public class AuthController {
         return "auth/sign-up";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        return "auth/logout";
+    }
+
     @PostMapping("/sign-up")
     public String register(@ModelAttribute UserRequestDto userRequestDto, Model model) {
         model.addAttribute("user", userRequestDto);

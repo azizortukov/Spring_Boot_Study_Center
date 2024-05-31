@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import uz.anas.study_center.entity.enums.PayType;
 import uz.anas.study_center.model.request.PaymentRequestDto;
 import uz.anas.study_center.service.PaymentServiceImpl;
+import uz.anas.study_center.service.UserService;
 import uz.anas.study_center.service.UserServiceImpl;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 public class PaymentController {
 
     private final PaymentServiceImpl paymentService;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping
     public String group(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,

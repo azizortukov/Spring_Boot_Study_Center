@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import uz.anas.study_center.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -36,4 +37,32 @@ public interface UserRepo extends JpaRepository<User, UUID> {
                     join roles r on r.id = ur.roles_id
                     where r.name = ?1""")
     Page<User> findByRoleNamePaginated(String name, PageRequest pageRequest);
+
+    @Query(nativeQuery = true, value = """
+            select u.* from users u
+            join timetable_student tts on u.id = tts.student_id
+            join timetable tt on tt.id = tts.timetable_id
+            where tt.id = (
+                select t.id from timetable t
+                where t.group_id = :groupId
+                order by t.name desc
+                limit 1)""")
+    Optional<List<User>> findAllByGroupId(UUID groupId);
+
+    @Query(nativeQuery = true, value = """
+            select u.* from users u
+            join timetable_student tts on u.id = tts.student_id
+            join timetable tt on tt.id = tts.timetable_id
+            join groups g on g.id = tt.group_id
+            join groups g2 on g2.course_id = g.course_id
+            where g2.id = :groupId and u.id not in (
+            select u2.id from users u2
+            join timetable_student tts2 on u2.id = tts2.student_id
+            join timetable tt2 on tt2.id = tts2.timetable_id
+            where tt2.id = (
+                select t.id from timetable t
+                where t.group_id = :groupId
+                order by t.name desc
+                limit 1))""")
+    Optional<List<User>> findAllExcludingGroupId(UUID groupId);
 }

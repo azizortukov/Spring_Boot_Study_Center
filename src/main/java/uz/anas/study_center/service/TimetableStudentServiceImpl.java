@@ -16,7 +16,7 @@ import java.util.UUID;
 public class TimetableStudentServiceImpl implements TimetableStudentService {
 
     private final TimetableStudentRepo timetableStudentRepo;
-    private final StudentAttendanceServiceImpl studentAttendanceService;
+    private final StudentAttendanceService studentAttendanceService;
 
     @Override
     public List<TimetableStudentResponseDto> findAllByTimetableId(UUID timetableId) {
