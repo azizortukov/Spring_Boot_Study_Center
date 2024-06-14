@@ -14,9 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService  {
 
-
     private final GroupRepo groupRepo;
-
 
     @Override
     public Page<Group> getAll(Integer pageNumber, Integer pageSize, String search) {
@@ -35,6 +33,11 @@ public class GroupServiceImpl implements GroupService  {
     @Override
     public List<Group> findAll() {
         return groupRepo.findAll();
+    }
+
+    @Override
+    public Group findById(UUID groupId) {
+        return groupRepo.findById(groupId).orElse(null);
     }
 
     @Override

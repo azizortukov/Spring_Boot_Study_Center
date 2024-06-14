@@ -106,20 +106,20 @@ public class Runnable implements CommandLineRunner {
                     .timetable(timetable)
                     .build();
             timetableStudentService.save(timetableStudent);
-            generateAttendances(timetableStudent);
+            generateAttendances(timetableStudent, LocalDate.now());
         }
     }
 
     //Creating a default 12 lesson for a timetable as timetable is one month and 12 lesson would be there
-    private void generateAttendances(TimetableStudent timetableStudent) {
+    public void generateAttendances(TimetableStudent timetableStudent, LocalDate startDate) {
         for (int i = 0; i < 12; i++) {
             StudentAttendance studentAttendance = StudentAttendance.builder()
                     .attendance(false)
                     .lessonOrder(i)
                     .timetableStudent(timetableStudent)
-                    .lessonDate(LocalDate.now().plusDays(i * 2))
+                    .lessonDate(startDate.plusDays(i * 2))
                     .build();
-            StudentAttendance saved = studentAttendanceService.save(studentAttendance);
+            studentAttendanceService.save(studentAttendance);
         }
     }
 }

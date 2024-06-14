@@ -3,6 +3,7 @@ package uz.anas.study_center.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.anas.study_center.entity.User;
@@ -48,6 +49,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(UUID id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> getAllByRoleName(RoleName roleName) {
+        return userRepo.findALLByRoleName(roleName.toString());
+    }
+
+    @Override
     public List<User> getAllStudents() {
         return userRepo.findALLByRoleName(RoleName.ROLE_STUDENT.name());
     }
@@ -65,11 +76,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getAllStudentsContaining(Integer pageNumber, Integer pageSize, String search) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         if (search != null && !search.isEmpty()) {
-            return userRepo.findAllByRoleNameAndPhoneNumber(RoleName.ROLE_STUDENT.name(), search, pageRequest);
+            return userRepo.findAllByRoleNameAndPhoneNumber(RoleName.ROLE_STUDENT.name(), search, pageable);
         } else {
-            return userRepo.findByRoleNamePaginated(RoleName.ROLE_STUDENT.name(), pageRequest);
+            return userRepo.findByRoleNamePaginated(RoleName.ROLE_STUDENT.name(), pageable);
         }
     }
 

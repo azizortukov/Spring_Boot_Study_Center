@@ -38,9 +38,10 @@
                         </th>
                         <th th:each="number : ${#numbers.sequence(0, 11)}" class="mx-3">
                             <button th:text="'Lesson ' + ${number + 1}"
-                                    th:disabled="${number != chosenTimetable.currentLesson || today != timetableStudents.first.lessonDates[number]}"
+                                    th:disabled="${number + 1 != chosenTimetable.currentLesson || today != timetableStudents.first.lessonDates[number]}"
                                     th:value="${true}" class="btn btn-light text-dark fw-bold"
                                     name="started" ></button>
+                            <p class="mt-1 text-center small" th:text="${timetableStudents.first.lessonDates[number].toString()}"></p>
                         </th>
                     </tr>
                     </thead>

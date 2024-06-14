@@ -19,4 +19,6 @@ public interface TimetableService {
     boolean checkIdInCollection(List<Timetable> timetables, UUID timetableId);
 
     Timetable findById(UUID timetableId);
+
+    Timetable findLatestByGroupId(UUID selectedGroupId);
 }

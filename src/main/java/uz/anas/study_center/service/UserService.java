@@ -3,6 +3,7 @@ package uz.anas.study_center.service;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import uz.anas.study_center.entity.User;
+import uz.anas.study_center.entity.enums.RoleName;
 import uz.anas.study_center.model.request.UserRequestDto;
 
 import java.util.List;
@@ -26,4 +27,8 @@ public interface UserService {
     List<User> findAllByGroupId(UUID groupId);
 
     List<User> findAllExcludingGroupId(UUID groupId);
+
+    User findById(UUID id);
+
+    List<User> getAllByRoleName(RoleName roleName);
 }

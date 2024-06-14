@@ -43,4 +43,9 @@ public class TimetableServiceImpl implements TimetableService {
     public Timetable findById(UUID timetableId) {
         return timetableRepo.findById(timetableId).orElse(null);
     }
+
+    @Override
+    public Timetable findLatestByGroupId(UUID groupId) {
+        return timetableRepo.findByGroupIdLatest(groupId);
+    }
 }

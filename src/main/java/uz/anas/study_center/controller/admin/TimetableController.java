@@ -64,7 +64,6 @@ public class TimetableController {
         session.setAttribute("selectedGroupId", chosenGroupId);
         model.addAttribute("groups", groupService.findAllByMentorId(mentor.getId()));
         model.addAttribute("selectedGroupId", chosenGroupId);
-
         //Getting id from request param, because timetable id always comes
         List<Timetable> timetables = timetableService.findAllByGroupIdAndMentor(chosenGroupId, mentor);
         model.addAttribute("timetables", timetables);
@@ -75,12 +74,9 @@ public class TimetableController {
         }
         Timetable chosenTimetable = timetableService.findById(chosenTimetableId);
         model.addAttribute("chosenTimetable", chosenTimetable);
-
         model.addAttribute("today", Date.valueOf(LocalDate.now()));
-
         List<TimetableStudentResponseDto> studentResponseDto = timetableStudentService.findAllByTimetableId(chosenTimetableId);
         model.addAttribute("timetableStudents", studentResponseDto);
-
         if (started == null) {
             started = (Boolean) session.getAttribute("started");
         }else if (started){
@@ -88,6 +84,7 @@ public class TimetableController {
         }else {
             chosenTimetable.setCurrentLesson(chosenTimetable.getCurrentLesson() + 1);
             timetableService.save(chosenTimetable);
+            session.removeAttribute("started");
         }
 
         model.addAttribute("started", started);

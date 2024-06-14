@@ -19,4 +19,5 @@ public interface GroupService {
 
     List<Group> findAll();
 
+    Group findById(UUID selectedGroupId);
 }
